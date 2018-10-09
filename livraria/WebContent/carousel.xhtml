@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+	<ui:composition template="_template.xhtml">
+	
+	<f:metadata>
+		<f:viewParam name="livroId" value="#{livroBean.livro.id}"/>
+		<f:viewAction action="#{livroBean.carregaLivroPeloId}" if="#{param.livroId != null}"/>
+	</f:metadata>
+		
+		<h:outputText value="#{sessionScope['usuarioLogado'].email}" />
+
+		
+		<ui:define name="titulo">
+				Novo Livro
+		</ui:define>
+		
+		<ui:define name="conteudo">
+		
+			<p:messages globalOnly="true"/>
+			
+			<h:form>
+				<p:carousel value="#{livroBean.livros}" headerText="Tabela de Livros" var="livro" responsive="true">
+					<p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+						<f:facet name="header">
+							#{livro.titulo}
+						</f:facet>
+						<h:outputText value="ID"/>
+						<h:outputText value="#{livro.id}"/>
+						<h:outputText value="ISBN"/>
+						<h:outputText value="#{livro.isbn}"/>
+						<h:outputText value="Preço"/>
+						<h:outputText value="R$ #{livro.preco}"/>
+					</p:panelGrid>
+					<f:facet name="footer">
+					    Total de livros: #{fn:length(livroBean.livros)}
+					</f:facet>
+				</p:carousel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>
